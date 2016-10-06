@@ -16,7 +16,9 @@ def main():
         print('list')
     elif subcommand == "search":
         print('search ' + args.alias)
-    elif subcommand == "help":
+    else:
+        # Help message will be printed if 'help' is inputted OR
+        # if there was no subcommand inputted
         rceParser.print_help()
 
 if __name__ == "__main__":
