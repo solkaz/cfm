@@ -12,14 +12,19 @@ def main():
 
     subcommand = args.subcommand
 
-    if subcommand == "list":
-        print('list')
-    elif subcommand == "search":
-        print('search ' + args.alias)
-    else:
+    if subcommand == 'help' or not subcommand:
         # Help message will be printed if 'help' is inputted OR
         # if there was no subcommand inputted
         rceParser.print_help()
+
+    else:
+        # The subcommands below require data from the .rce file.
+        # Extract the contents of it
+
+        if subcommand == "list":
+            print('list')
+        elif subcommand == "search":
+            print('search ' + args.alias)
 
 if __name__ == "__main__":
     main()
