@@ -1,9 +1,0 @@
-{
-    "default_editor": '',
-    "aliases": {
-	"rce": "~/.rce",
-	"emacs": "~/.emacs",
-	"zshrc": "~/.zshrc",
-	"gitconfig": "~/.gitconfig"
-    }
-}
