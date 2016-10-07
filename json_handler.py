@@ -1,9 +1,13 @@
 import json
+import os.path
 
 
-def JSONHandler():
-    def __init__(self, file_path):
-        self.file_path = file_path
+class JSONHandler():
+    def __init__(self, file_path='~/.rce'):
+        self.file_path = os.path.expanduser(file_path)
+        if not self.does_file_exist():
+            raise OSError(".rce file doesn't exist at " + file_path +
+                          "; exiting")
 
     def does_file_exist(self):
         try:
@@ -22,4 +26,3 @@ def JSONHandler():
     def save_to_file(self, save_data):
         with open(self.DATA_FILE_LOCATION, 'w', encoding='utf-8') as rce_file:
             json.dump(save_data, rce_file, ensure_ascii=False)
-        
