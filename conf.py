@@ -5,8 +5,10 @@ import json
 
 class Conf():
     def __init__(self, rce_handler):
+        # Set the .rce file handler used for I/O
+        self.rce_handler = rce_handler
         # Extract the contents of the .rce file
-        file_contents = rce_handler.load_file_contents()
+        file_contents = self.rce_handler.load_file_contents()
 
         try:
             configs = json.loads(file_contents)
