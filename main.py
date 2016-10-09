@@ -41,7 +41,7 @@ def main(user_args):
         if subcommand == "list":
             rce_config_man.ListAliases()
         elif subcommand == "search":
-            print('search ' + args.alias)
+            rce_config_man.Search(args.alias)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
