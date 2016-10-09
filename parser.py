@@ -12,9 +12,17 @@ def new_parser():
     )
 
     # List subcommand
-    subparsers.add_parser(
+    list_parser = subparsers.add_parser(
         'list',
         help='list aliases'
+    )
+
+    list_parser.add_argument(
+        'ALIAS',
+        nargs='?',
+        default=None,
+        help=("list the ALIAS' mappings to " +
+              "their config file path")
     )
 
     # Search subcommand
@@ -23,7 +31,7 @@ def new_parser():
         help='search aliases'
     )
     search_parser.add_argument(
-        'alias',
+        'ALIAS',
         help='alias to search for'
     )
 

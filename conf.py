@@ -18,9 +18,19 @@ class Conf():
             print(err)
             raise ValueError('Invalid JSON format; exiting')
 
-    def ListAliases(self):
-        for alias, file_path in self.aliases.items():
-            print(alias + ' -> ' + file_path)
+    def DoesAliasExist(self, alias_phrase):
+        return alias_phrase in self.aliases
+
+    def ListAliases(self, alias_phrase):
+        if alias_phrase is None:
+            sorted_aliases = utils.make_sorted_dict(self.aliases)
+            for alias, file_path in sorted_aliases.items():
+                utils.print_alias(alias, file_path)
+        elif self.DoesAliasExist(alias_phrase):
+            utils.print_alias(alias_phrase, self.aliases[alias_phrase])
+        else:
+            utils.print_does_not_exist(alias_phrase)
+            # TODO: offer to add alias
 
     def Search(self, search_phrase):
         matched_keys = []
