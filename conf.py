@@ -16,7 +16,7 @@ class Conf():
             self.default_editor = configs['default_editor']
         except ValueError as err:
             print(err)
-            raise ValueError('Invalid JSON format; exiting')
+            raise ValueError('invalid JSON format; exiting')
 
     def DoesAliasExist(self, alias_phrase):
         return alias_phrase in self.aliases
@@ -43,4 +43,23 @@ class Conf():
                 utils.print_alias(key, self.aliases[key])
 
         else:
-            print('No aliases matched')
+            print('no aliases matched')
+
+    def Rename(self, old_alias, new_alias):
+        if not self.DoesAliasExist(old_alias):
+            utils.print_does_not_exist(old_alias)
+            # TODO: offer to add alias
+        else:
+            if not old_alias == new_alias:
+                self.aliases[new_alias] = self.aliases.pop(old_alias)
+                print('renaming ' + old_alias + ' to ' + new_alias)
+                # Save to .rce file
+                self.rce_handler.save_to_file(self.PrepForSave())
+            else:
+                print('aliases are the same')
+
+    def PrepForSave(self):
+        return dict(
+            default_editor=self.default_editor,
+            aliases=self.aliases
+        )

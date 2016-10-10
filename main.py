@@ -42,6 +42,8 @@ def main(user_args):
             rce_config_man.ListAliases(args.ALIAS)
         elif subcommand == "search":
             rce_config_man.Search(args.ALIAS)
+        elif subcommand == "mv":
+            rce_config_man.Rename(args.old_alias, args.new_alias)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

@@ -40,6 +40,20 @@ def new_parser():
     # TODO: Implement 'edit' subcommand
 
     # TODO: Implement 'mv' (rename) subcommand
+    mv_parser = subparsers.add_parser(
+        'mv',
+        help='rename an alias'
+    )
+
+    mv_parser.add_argument(
+        'old_alias',
+        help="alias' old name"
+    )
+
+    mv_parser.add_argument(
+        'new_alias',
+        help="alias' new name"
+    )
 
     # Help subcommand
     subparsers.add_parser(
