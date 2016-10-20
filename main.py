@@ -44,6 +44,8 @@ def main(user_args):
             rce_config_man.Search(args.ALIAS)
         elif subcommand == "mv":
             rce_config_man.Rename(args.old_alias, args.new_alias)
+        elif subcommand == "add":
+            rce_config_man.AddAlias(args.ALIAS, args.file_path)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

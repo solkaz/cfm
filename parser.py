@@ -35,11 +35,25 @@ def new_parser():
         help='alias to search for'
     )
 
-    # TODO: Implement 'add' subcommand
+    add_parser = subparsers.add_parser(
+        'add',
+        help='add an alias'
+    )
+
+    add_parser.add_argument(
+        'ALIAS',
+        help="config file's alias"
+    )
+
+    add_parser.add_argument(
+        'file_path',
+        help='file path to the config file'
+    )
+
+    # TODO: Implement 'remap' subcommand
 
     # TODO: Implement 'edit' subcommand
 
-    # TODO: Implement 'mv' (rename) subcommand
     mv_parser = subparsers.add_parser(
         'mv',
         help='rename an alias'

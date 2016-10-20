@@ -21,6 +21,17 @@ class Conf():
     def DoesAliasExist(self, alias_phrase):
         return alias_phrase in self.aliases
 
+    def AddAlias(self, alias_to_add, file_path):
+        # Check that the alias pre-exists
+        if self.DoesAliasExist(alias_to_add):
+            print('alias ' + alias_to_add + " already exists at " + file_path)
+            # TODO: offer to remap file or to specify a new alias
+        else:
+            self.aliases[alias_to_add] = file_path
+            print('adding ' + alias_to_add + ' at ' + file_path)
+            # Save to .rce file
+            self.rce_handler.save_to_file(self.PrepForSave())
+
     def ListAliases(self, alias_phrase):
         if alias_phrase is None:
             sorted_aliases = utils.make_sorted_dict(self.aliases)
