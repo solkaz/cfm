@@ -50,6 +50,18 @@ def new_parser():
         help='file path to the config file'
     )
 
+    rm_parser = subparsers.add_parser(
+        'rm',
+        help='remove an alias'
+    )
+
+    rm_parser.add_argument(
+        'ALIAS',
+        help='config file alias to remove'
+    )
+
+    # TODO: Add -f flag for rm
+
     # TODO: Implement 'remap' subcommand
 
     # TODO: Implement 'edit' subcommand

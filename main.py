@@ -46,6 +46,8 @@ def main(user_args):
             rce_config_man.Rename(args.old_alias, args.new_alias)
         elif subcommand == "add":
             rce_config_man.AddAlias(args.ALIAS, args.file_path)
+        elif subcommand == "rm":
+            rce_config_man.RemoveAlias(args.ALIAS)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

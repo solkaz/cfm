@@ -44,6 +44,15 @@ class Conf():
             # Save to .rce file
             self.rce_handler.save_to_file(self.PrepForSave())
 
+    def RemoveAlias(self, alias_to_remove):
+        # Check that the alias does exist
+        try:
+            del self.aliases[alias_to_remove]
+            self.rce_handler.save_to_file(self.PrepForSave())
+            print(alias_to_remove + " removed")
+        except KeyError:
+            print(alias_to_remove + ' does not exist')
+
     def ListAliases(self, alias_phrase):
         if alias_phrase is None:
             sorted_aliases = utils.make_sorted_dict(self.aliases)
