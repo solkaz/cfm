@@ -33,7 +33,7 @@ class Conf():
             self.AddAlias(alias, alias_file_path)
 
     def AddAlias(self, alias_to_add, file_path):
-        # Check that the alias pre-exists
+        # Check that the alias already exists
         if self.DoesAliasExist(alias_to_add):
             print('alias ' + alias_to_add + " already exists at "
                   + self.aliases[alias_to_add])
@@ -44,13 +44,16 @@ class Conf():
             # Save to .rce file
             self.rce_handler.save_to_file(self.PrepForSave())
 
-    def RemoveAlias(self, alias_to_remove):
+    def RemoveAlias(self, alias_to_remove, force=False):
         # Check that the alias does exist
-        try:
+        if self.DoesAliasExist(alias_to_remove):
+            if not force and not utils.confirm_rm(alias_to_remove):
+                return
             del self.aliases[alias_to_remove]
             self.rce_handler.save_to_file(self.PrepForSave())
-            print(alias_to_remove + " removed")
-        except KeyError:
+            if not force:
+                print(alias_to_remove + " removed")
+        elif not force:
             print(alias_to_remove + ' does not exist')
 
     def ListAliases(self, alias_phrase):

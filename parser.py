@@ -60,7 +60,11 @@ def new_parser():
         help='config file alias to remove'
     )
 
-    # TODO: Add -f flag for rm
+    rm_parser.add_argument(
+        '-f', '--force',
+        action='store_true',
+        help='do not prompt for removal'
+    )
 
     # TODO: Implement 'remap' subcommand
 
