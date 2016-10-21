@@ -18,6 +18,13 @@ class Conf():
             print(err)
             raise ValueError('invalid JSON format; exiting')
 
+    def Save(self):
+        save_data = dict(
+            default_editor=self.default_editor,
+            aliases=self.aliases
+        )
+        self.rce_handler.save_to_file(save_data)
+
     def DoesAliasExist(self, alias_phrase):
         return alias_phrase in self.aliases
 
@@ -41,8 +48,7 @@ class Conf():
         else:
             self.aliases[alias_to_add] = file_path
             print('adding ' + alias_to_add + ' at ' + file_path)
-            # Save to .rce file
-            self.rce_handler.save_to_file(self.PrepForSave())
+            self.Save()
 
     def RemoveAlias(self, alias_to_remove, force=False):
         # Check that the alias does exist
@@ -50,7 +56,7 @@ class Conf():
             if not force and not utils.confirm_rm(alias_to_remove):
                 return
             del self.aliases[alias_to_remove]
-            self.rce_handler.save_to_file(self.PrepForSave())
+            self.Save()
             if not force:
                 print(alias_to_remove + " removed")
         elif not force:
@@ -87,13 +93,6 @@ class Conf():
             if not old_alias == new_alias:
                 self.aliases[new_alias] = self.aliases.pop(old_alias)
                 print('renaming ' + old_alias + ' to ' + new_alias)
-                # Save to .rce file
-                self.rce_handler.save_to_file(self.PrepForSave())
+                self.Save()
             else:
                 print('aliases are the same')
-
-    def PrepForSave(self):
-        return dict(
-            default_editor=self.default_editor,
-            aliases=self.aliases
-        )
