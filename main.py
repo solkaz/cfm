@@ -34,17 +34,17 @@ def main(user_args):
             quit()
 
         if subcommand == "list":
-            rce_config_man.ListAliases(args.ALIAS)
+            rce_config_man.list(args.ALIAS)
         elif subcommand == "search":
-            rce_config_man.Search(args.ALIAS)
+            rce_config_man.search(args.ALIAS)
         elif subcommand == "mv":
-            rce_config_man.Rename(args.old_alias, args.new_alias)
+            rce_config_man.mv(args.old_alias, args.new_alias)
         elif subcommand == "add":
-            rce_config_man.AddAlias(args.ALIAS, args.file_path)
+            rce_config_man.add(args.ALIAS, args.file_path)
         elif subcommand == "rm":
-            rce_config_man.RemoveAlias(args.ALIAS, args.force)
+            rce_config_man.rm(args.ALIAS, args.force)
         elif subcommand == "edit":
-            rce_config_man.EditConfigFile(args.ALIAS)
+            rce_config_man.edit(args.ALIAS)
 
 
 if __name__ == "__main__":

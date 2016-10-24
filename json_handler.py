@@ -1,22 +1,14 @@
 import json
 import os.path
+import utils
 
 
 class JSONHandler():
     def __init__(self, file_path='~/.rce'):
         self.file_path = os.path.expanduser(file_path)
-        if not self.does_file_exist():
+        if not utils.does_file_exist(self.file_path):
             raise OSError(".rce file doesn't exist at " + file_path +
                           "; exiting")
-
-    def does_file_exist(self):
-        try:
-            with open(self.file_path):
-                pass
-            return True
-        except OSError:
-            pass
-        return False
 
     def load_file_contents(self):
         with open(self.file_path) as rce_file:

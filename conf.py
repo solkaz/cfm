@@ -20,61 +20,64 @@ class Conf():
             print(err)
             raise ValueError('invalid JSON format; exiting')
 
-    def Save(self):
+    def save(self):
         save_data = dict(
             editor=self.editor,
             aliases=self.aliases
         )
         self.rce_handler.save_to_file(save_data)
 
-    def DoesAliasExist(self, alias_phrase):
+    def does_alias_exist(self, alias_phrase):
         return alias_phrase in self.aliases
 
-    def HandleDoesNotExist(self, alias_phrase):
+    def handle_does_not_exist(self, alias_phrase):
         utils.print_does_not_exist(alias_phrase)
-        self.OfferToAdd(alias_phrase)
+        self.offer_add(alias_phrase)
 
-    def OfferToAdd(self, alias):
+    def offer_add(self, alias):
         alias_file_path = utils.offer_to_add(alias)
 
         # User chose to add the alias and entered a file_path
         if alias_file_path is not None:
-            self.AddAlias(alias, alias_file_path)
+            self.add_alias(alias, alias_file_path)
 
-    def AddAlias(self, alias_to_add, file_path):
+    def add(self, alias_to_add, file_path):
         # Check that the alias already exists
-        if self.DoesAliasExist(alias_to_add):
-            print('alias ' + alias_to_add + " already exists at "
-                  + self.aliases[alias_to_add])
+        if self.does_alias_exist(alias_to_add):
+            print("alias {0} already exists at {1}".format(
+                alias_to_add, self.get_file_path(alias_to_add)
+            ))
             # TODO: offer to remap file or to specify a new alias
         else:
+            print('adding {0} at {1}'.format(
+                alias_to_add, file_path
+            ))
             self.aliases[alias_to_add] = file_path
-            print('adding ' + alias_to_add + ' at ' + file_path)
-            self.Save()
+            self.save()
 
-    def RemoveAlias(self, alias_to_remove, force=False):
+    def rm(self, alias_to_remove, force=False):
         # Check that the alias does exist
-        if self.DoesAliasExist(alias_to_remove):
+        if self.does_alias_exist(alias_to_remove):
             if not force and not utils.confirm_rm(alias_to_remove):
                 return
             del self.aliases[alias_to_remove]
-            self.Save()
+            self.save()
             if not force:
-                print(alias_to_remove + " removed")
+                print("{0} removed".format(alias_to_remove))
         elif not force:
-            print(alias_to_remove + ' does not exist')
+            print('{0} does not exist'.format(alias_to_remove))
 
-    def ListAliases(self, alias_phrase):
+    def list(self, alias_phrase):
         if alias_phrase is None:
             sorted_aliases = utils.make_sorted_dict(self.aliases)
             for alias, file_path in sorted_aliases.items():
                 utils.print_alias(alias, file_path)
-        elif self.DoesAliasExist(alias_phrase):
+        elif self.does_alias_exist(alias_phrase):
             utils.print_alias(alias_phrase, self.aliases[alias_phrase])
         else:
-            self.HandleDoesNotExist(alias_phrase)
+            self.handle_does_not_exist(alias_phrase)
 
-    def Search(self, search_phrase):
+    def search(self, search_phrase):
         matched_keys = []
         for alias in self.aliases:
             if search_phrase in alias:
@@ -84,25 +87,25 @@ class Conf():
             for key in matched_keys:
                 utils.print_alias(key, self.aliases[key])
         else:
-            print('no aliases matched for ' + search_phrase)
-            self.OfferToAdd(search_phrase)
+            print('no aliases matched for {0}'.format(search_phrase))
+            self.offer_add(search_phrase)
 
-    def Rename(self, old_alias, new_alias):
-        if not self.DoesAliasExist(old_alias):
-            self.HandleDoesNotExist(old_alias)
+    def mv(self, old_alias, new_alias):
+        if not self.does_alias_exist(old_alias):
+            self.handle_does_not_exist(old_alias)
         else:
             if not old_alias == new_alias:
                 self.aliases[new_alias] = self.aliases.pop(old_alias)
-                print('renaming ' + old_alias + ' to ' + new_alias)
-                self.Save()
+                print('renaming {0} to {1}'.format(old_alias, new_alias))
+                self.save()
             else:
                 print('aliases are the same')
 
-    def EditConfigFile(self, alias):
-        if self.DoesAliasExist(alias):
-            file_path = os.path.expanduser(self.aliases[alias])
+    def edit(self, alias):
+        if self.does_alias_exist(alias):
+            file_path = self.get_file_path(alias)
         else:
-            self.HandleDoesNotExist(alias)
+            self.handle_does_not_exist(alias)
             return
 
         exec_cmd = [
@@ -114,3 +117,6 @@ class Conf():
             subprocess.run(exec_cmd)
         except Exception as err:
             print(err)
+
+    def get_file_path(self, alias):
+        return os.path.expanduser(self.aliases[alias])
