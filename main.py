@@ -43,6 +43,9 @@ def main(user_args):
             rce_config_man.AddAlias(args.ALIAS, args.file_path)
         elif subcommand == "rm":
             rce_config_man.RemoveAlias(args.ALIAS, args.force)
+        elif subcommand == "edit":
+            rce_config_man.EditConfigFile(args.ALIAS)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])

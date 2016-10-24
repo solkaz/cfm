@@ -68,7 +68,15 @@ def new_parser():
 
     # TODO: Implement 'remap' subcommand
 
-    # TODO: Implement 'edit' subcommand
+    edit_parser = subparsers.add_parser(
+        'edit',
+        help='edit a config file'
+    )
+
+    edit_parser.add_argument(
+        'ALIAS',
+        help="alias of the config file to edit"
+    )
 
     mv_parser = subparsers.add_parser(
         'mv',

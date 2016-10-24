@@ -1,6 +1,8 @@
 import utils
 
 import json
+import os.path
+import subprocess
 
 
 class Conf():
@@ -13,14 +15,14 @@ class Conf():
         try:
             configs = json.loads(file_contents)
             self.aliases = configs['aliases']
-            self.default_editor = configs['default_editor']
+            self.editor = configs['editor']
         except ValueError as err:
             print(err)
             raise ValueError('invalid JSON format; exiting')
 
     def Save(self):
         save_data = dict(
-            default_editor=self.default_editor,
+            editor=self.editor,
             aliases=self.aliases
         )
         self.rce_handler.save_to_file(save_data)
@@ -81,7 +83,6 @@ class Conf():
         if matched_keys:
             for key in matched_keys:
                 utils.print_alias(key, self.aliases[key])
-
         else:
             print('no aliases matched for ' + search_phrase)
             self.OfferToAdd(search_phrase)
@@ -96,3 +97,20 @@ class Conf():
                 self.Save()
             else:
                 print('aliases are the same')
+
+    def EditConfigFile(self, alias):
+        if self.DoesAliasExist(alias):
+            file_path = os.path.expanduser(self.aliases[alias])
+        else:
+            self.HandleDoesNotExist(alias)
+            return
+
+        exec_cmd = [
+            self.editor['command'],
+            *self.editor['flags'],
+            file_path
+        ]
+        try:
+            subprocess.run(exec_cmd)
+        except Exception as err:
+            print(err)
