@@ -45,6 +45,8 @@ def main(user_args):
             rce_config_man.rm(args.ALIAS, args.force)
         elif subcommand == "edit":
             rce_config_man.edit(args.ALIAS)
+        elif subcommand == "check":
+            rce_config_man.check(args.ALIAS)
 
 
 if __name__ == "__main__":

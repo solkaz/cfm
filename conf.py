@@ -120,3 +120,18 @@ class Conf():
 
     def get_file_path(self, alias):
         return os.path.expanduser(self.aliases[alias])
+
+    def check(self, alias):
+        if self.does_alias_exist(alias):
+            file_path = self.get_file_path(alias)
+            if utils.does_file_exist(file_path):
+                exists = "exists"
+            else:
+                exists = "does not exist"
+
+            message = "File {0} at {1} for alias {2}".format(
+                exists, file_path, alias
+            )
+            print(message)
+        else:
+            self.handle_does_not_exist(alias)

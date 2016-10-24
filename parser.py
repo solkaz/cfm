@@ -93,6 +93,16 @@ def new_parser():
         help="alias' new name"
     )
 
+    check_parser = subparsers.add_parser(
+        'check',
+        help='check that the file associated with an alias exists'
+    )
+
+    check_parser.add_argument(
+        'ALIAS',
+        help='alias to check'
+    )
+
     # Help subcommand
     subparsers.add_parser(
         'help',
