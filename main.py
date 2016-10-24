@@ -28,13 +28,8 @@ def main(user_args):
         # TODO: load .rce file from different locations
         try:
             rce_file_handler = json_handler.JSONHandler()
-        except OSError as err:
-            print(err)
-            quit()
-
-        try:
             rce_config_man = conf.Conf(rce_file_handler)
-        except ValueError as err:
+        except (OSError, ValueError) as err:
             print(err)
             quit()
 

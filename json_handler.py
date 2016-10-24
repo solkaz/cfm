@@ -25,4 +25,5 @@ class JSONHandler():
 
     def save_to_file(self, save_data):
         with open(self.file_path, 'w', encoding='utf-8') as rce_file:
-            json.dump(save_data, rce_file, ensure_ascii=False)
+            json.dump(save_data, rce_file, sort_keys=True,
+                      indent=4, ensure_ascii=False)
