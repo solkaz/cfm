@@ -6,11 +6,11 @@ import subprocess
 
 
 class Conf():
-    def __init__(self, rce_handler):
-        # Set the .rce file handler used for I/O
-        self.rce_handler = rce_handler
-        # Extract the contents of the .rce file
-        file_contents = self.rce_handler.load_file_contents()
+    def __init__(self, cfm_handler):
+        # Set the .cfm file handler used for I/O
+        self.cfm_handler = cfm_handler
+        # Extract the contents of the .cfm file
+        file_contents = self.cfm_handler.load_file_contents()
 
         try:
             configs = json.loads(file_contents)
@@ -25,7 +25,7 @@ class Conf():
             editor=self.editor,
             aliases=self.aliases
         )
-        self.rce_handler.save_to_file(save_data)
+        self.cfm_handler.save_to_file(save_data)
 
     def does_alias_exist(self, alias_phrase):
         return alias_phrase in self.aliases
@@ -39,7 +39,7 @@ class Conf():
 
         # User chose to add the alias and entered a file_path
         if alias_file_path is not None:
-            self.add_alias(alias, alias_file_path)
+            self.add(alias, alias_file_path)
 
     def add(self, alias_to_add, file_path):
         # Check that the alias already exists
@@ -121,6 +121,9 @@ class Conf():
     def get_file_path(self, alias):
         return os.path.expanduser(self.aliases[alias])
 
+    def set_file_path(self, alias, file_path):
+        self.aliases[alias] = file_path
+
     def check(self, alias):
         if self.does_alias_exist(alias):
             file_path = self.get_file_path(alias)
@@ -135,3 +138,13 @@ class Conf():
             print(message)
         else:
             self.handle_does_not_exist(alias)
+
+    def remap(self, alias, new_file_path):
+        if self.does_alias_exist(alias):
+            # Check that new_file_path != pre-existing file_path
+            if os.path.expanduser(new_file_path) != self.get_file_path(alias):
+                self.set_file_path(alias, new_file_path)
+                self.save()
+                print("remapped {0} to {1}".format(alias, new_file_path))
+            else:
+                print("new file path is the same as the previous one")

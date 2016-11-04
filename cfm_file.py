@@ -3,8 +3,8 @@ import os.path
 import utils
 
 
-class JSONHandler():
-    def __init__(self, file_path='~/.rce'):
+class CFMFile():
+    def __init__(self, file_path='~/.cfm'):
         self.file_path = os.path.expanduser(file_path)
         if not utils.does_file_exist(self.file_path):
             raise OSError(".rce file doesn't exist at " + file_path +

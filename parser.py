@@ -3,46 +3,45 @@ import argparse
 
 def new_parser():
     parser = argparse.ArgumentParser(
-        description="Config file manager",
+        description="config file manager",
     )
 
     subparsers = parser.add_subparsers(
         dest='subcommand',
-        help='Available rce subcommands'
+        help='available subcommands'
     )
 
     # List subcommand
     list_parser = subparsers.add_parser(
         'list',
-        help='list aliases'
+        help="list the alias' mappings in the .cfm file or a specific one"
     )
 
     list_parser.add_argument(
-        'ALIAS',
+        'alias',
         nargs='?',
         default=None,
-        help=("list the ALIAS' mappings to " +
-              "their config file path")
+        help="alias of the config file to show"
     )
 
     # Search subcommand
     search_parser = subparsers.add_parser(
         'search',
-        help='search aliases'
+        help='search the aliases stored in the .cfm file'
     )
     search_parser.add_argument(
-        'ALIAS',
-        help='alias to search for'
+        'alias',
+        help='phrase to search against'
     )
 
     add_parser = subparsers.add_parser(
         'add',
-        help='add an alias'
+        help='add an alias to the .cfm file'
     )
 
     add_parser.add_argument(
-        'ALIAS',
-        help="config file's alias"
+        'alias',
+        help="alias of the config file to add "
     )
 
     add_parser.add_argument(
@@ -56,7 +55,7 @@ def new_parser():
     )
 
     rm_parser.add_argument(
-        'ALIAS',
+        'alias',
         help='config file alias to remove'
     )
 
@@ -66,7 +65,18 @@ def new_parser():
         help='do not prompt for removal'
     )
 
-    # TODO: Implement 'remap' subcommand
+    remap_parser = subparsers.add_parser(
+        'remap',
+        help='remap an alias to another config file location'
+    )
+    remap_parser.add_argument(
+        'alias',
+        help='alias to remap'
+    )
+    remap_parser.add_argument(
+        'new_file_path',
+        help='new file path that ali'
+    )
 
     edit_parser = subparsers.add_parser(
         'edit',
@@ -74,7 +84,7 @@ def new_parser():
     )
 
     edit_parser.add_argument(
-        'ALIAS',
+        'alias',
         help="alias of the config file to edit"
     )
 
@@ -95,12 +105,12 @@ def new_parser():
 
     check_parser = subparsers.add_parser(
         'check',
-        help='check that the file associated with an alias exists'
+        help='check that the file associated with a specified alias exists'
     )
 
     check_parser.add_argument(
-        'ALIAS',
-        help='alias to check'
+        'alias',
+        help='alias of the file to check'
     )
 
     # Help subcommand
