@@ -33,6 +33,10 @@ def offer_to_add(alias):
         return file_path
 
 
+def create_cfm():
+    return prompt_user('Create a default .cfm file at ~/.cfm?')
+
+
 def confirm_rm(alias):
     return prompt_user('Remove {0}?'.format(alias))
 

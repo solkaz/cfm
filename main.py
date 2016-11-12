@@ -3,6 +3,7 @@
 import conf
 import cfm_file
 import parser
+import utils
 
 import sys
 
@@ -28,8 +29,14 @@ def main(user_args):
         # TODO: load .cfm file from different locations
         try:
             cfm_file_handler = cfm_file.CFMFile()
+            cfm_file_handler.check_cfm_file()
             cfm_conf_man = conf.Conf(cfm_file_handler)
-        except (OSError, ValueError) as err:
+        except OSError as err:
+            print(err)
+            if utils.create_cfm():
+                cfm_file_handler.make_default_cfm()
+            quit()
+        except ValueError as err:
             print(err)
             quit()
 
