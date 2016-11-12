@@ -49,9 +49,7 @@ class Conf():
             ))
             # TODO: offer to remap file or to specify a new alias
         else:
-            print('adding {0} at {1}'.format(
-                alias_to_add, file_path
-            ))
+            print('adding {0} at {1}'.format(alias_to_add, file_path))
             self.aliases[alias_to_add] = file_path
             self.save()
 
@@ -80,10 +78,9 @@ class Conf():
                     self.handle_does_not_exist(alias)
 
     def search(self, search_phrase):
-        matched_keys = []
-        for alias in self.aliases:
-            if search_phrase in alias:
-                matched_keys.append(alias)
+        matched_keys = [
+            alias for alias in self.aliases if search_phrase in alias
+        ]
 
         if matched_keys:
             for key in matched_keys:
@@ -103,18 +100,25 @@ class Conf():
             else:
                 print('aliases are the same')
 
-    def edit(self, alias):
+    def edit(self, alias, editor=None):
         if self.does_alias_exist(alias):
             file_path = self.get_file_path(alias)
         else:
             self.handle_does_not_exist(alias)
             return
 
-        exec_cmd = [
-            self.editor['command'],
-            *self.editor['flags'],
-            file_path
-        ]
+        if editor is None:
+            exec_cmd = [
+                self.editor['command'],
+                *self.editor['flags'],
+                file_path
+            ]
+        else:
+            editor = editor[0].strip().split()
+            exec_cmd = [
+                *(editor),
+                file_path
+            ]
         try:
             subprocess.run(exec_cmd)
         except Exception as err:

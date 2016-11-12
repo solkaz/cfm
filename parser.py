@@ -92,6 +92,13 @@ def new_parser():
         help="alias of the config file to edit"
     )
 
+    edit_parser.add_argument(
+        '-e', '--editor',
+        nargs='*',
+        dest="editor",
+        help="specifies which editor command to use"
+    )
+
     # mv subcommand
     mv_parser = subparsers.add_parser(
         'mv',

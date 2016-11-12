@@ -51,7 +51,7 @@ def main(user_args):
         elif subcommand == "rm":
             cfm_conf_man.rm(args.alias, args.force)
         elif subcommand == "edit":
-            cfm_conf_man.edit(args.alias)
+            cfm_conf_man.edit(args.alias, args.editor)
         elif subcommand == "check":
             cfm_conf_man.check(args.alias)
         elif subcommand == "remap":
