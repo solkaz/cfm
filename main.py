@@ -34,7 +34,7 @@ def main(user_args):
             quit()
 
         if subcommand == "list":
-            cfm_conf_man.list(args.alias)
+            cfm_conf_man.list(args.aliases)
         elif subcommand == "search":
             cfm_conf_man.search(args.alias)
         elif subcommand == "mv":
@@ -42,7 +42,7 @@ def main(user_args):
         elif subcommand == "add":
             cfm_conf_man.add(args.alias, args.file_path)
         elif subcommand == "rm":
-            cfm_conf_man.rm(args.alias, args.focfm)
+            cfm_conf_man.rm(args.alias, args.force)
         elif subcommand == "edit":
             cfm_conf_man.edit(args.alias)
         elif subcommand == "check":

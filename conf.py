@@ -67,15 +67,17 @@ class Conf():
         elif not force:
             print('{0} does not exist'.format(alias_to_remove))
 
-    def list(self, alias_phrase):
-        if alias_phrase is None:
+    def list(self, aliases):
+        if not aliases:
             sorted_aliases = utils.make_sorted_dict(self.aliases)
             for alias, file_path in sorted_aliases.items():
                 utils.print_alias(alias, file_path)
-        elif self.does_alias_exist(alias_phrase):
-            utils.print_alias(alias_phrase, self.aliases[alias_phrase])
         else:
-            self.handle_does_not_exist(alias_phrase)
+            for alias in aliases:
+                if self.does_alias_exist(alias):
+                    utils.print_alias(alias, self.aliases[alias])
+                else:
+                    self.handle_does_not_exist(alias)
 
     def search(self, search_phrase):
         matched_keys = []

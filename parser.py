@@ -11,20 +11,20 @@ def new_parser():
         help='available subcommands'
     )
 
-    # List subcommand
+    # list subcommand
     list_parser = subparsers.add_parser(
         'list',
         help="list the alias' mappings in the .cfm file or a specific one"
     )
 
     list_parser.add_argument(
-        'alias',
-        nargs='?',
-        default=None,
+        'aliases',
+        nargs='*',
+        default=[],
         help="alias of the config file to show"
     )
 
-    # Search subcommand
+    # search subcommand
     search_parser = subparsers.add_parser(
         'search',
         help='search the aliases stored in the .cfm file'
@@ -34,6 +34,7 @@ def new_parser():
         help='phrase to search against'
     )
 
+    # add subcommand
     add_parser = subparsers.add_parser(
         'add',
         help='add an alias to the .cfm file'
@@ -49,6 +50,7 @@ def new_parser():
         help='file path to the config file'
     )
 
+    # rm subcommand
     rm_parser = subparsers.add_parser(
         'rm',
         help='remove an alias'
@@ -65,6 +67,7 @@ def new_parser():
         help='do not prompt for removal'
     )
 
+    # remap subcommand
     remap_parser = subparsers.add_parser(
         'remap',
         help='remap an alias to another config file location'
@@ -78,6 +81,7 @@ def new_parser():
         help='new file path that ali'
     )
 
+    # edit subcommand
     edit_parser = subparsers.add_parser(
         'edit',
         help='edit a config file'
@@ -88,6 +92,7 @@ def new_parser():
         help="alias of the config file to edit"
     )
 
+    # mv subcommand
     mv_parser = subparsers.add_parser(
         'mv',
         help='rename an alias'
@@ -103,6 +108,7 @@ def new_parser():
         help="alias' new name"
     )
 
+    # check subcommand
     check_parser = subparsers.add_parser(
         'check',
         help='check that the file associated with a specified alias exists'
