@@ -21,7 +21,7 @@ def new_parser():
         'aliases',
         nargs='*',
         default=[],
-        help="alias of the config file to show"
+        help="aliases of the config files to show"
     )
 
     # search subcommand
@@ -122,8 +122,10 @@ def new_parser():
     )
 
     check_parser.add_argument(
-        'alias',
-        help='alias of the file to check'
+        'aliases',
+        nargs='+',
+        default=[],
+        help='aliases of the files to check'
     )
 
     # Help subcommand

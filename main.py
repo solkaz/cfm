@@ -53,7 +53,7 @@ def main(user_args):
         elif subcommand == "edit":
             cfm_conf_man.edit(args.alias, args.editor)
         elif subcommand == "check":
-            cfm_conf_man.check(args.alias)
+            cfm_conf_man.check(args.aliases)
         elif subcommand == "remap":
             cfm_conf_man.remap(args.alias, args.new_file_path)
 

@@ -130,20 +130,21 @@ class Conf():
     def set_file_path(self, alias, file_path):
         self.aliases[alias] = file_path
 
-    def check(self, alias):
-        if self.does_alias_exist(alias):
-            file_path = self.get_file_path(alias)
-            if utils.does_file_exist(file_path):
-                exists = "exists"
-            else:
-                exists = "does not exist"
+    def check(self, aliases):
+        for alias in aliases:
+            if self.does_alias_exist(alias):
+                file_path = self.get_file_path(alias)
+                if utils.does_file_exist(file_path):
+                    exists = "exists"
+                else:
+                    exists = "does not exist"
 
-            message = "File {0} at {1} for alias {2}".format(
-                exists, file_path, alias
-            )
-            print(message)
-        else:
-            self.handle_does_not_exist(alias)
+                message = "File {0} at {1} for alias {2}".format(
+                    exists, file_path, alias
+                )
+                print(message)
+            else:
+                self.handle_does_not_exist(alias)
 
     def remap(self, alias, new_file_path):
         if self.does_alias_exist(alias):
